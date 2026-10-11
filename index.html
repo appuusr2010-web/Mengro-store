@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#111111" />
+  <title>MENGRO — Everyday Finds</title>
+  <style>
+    :root{--ink:#111;--muted:#6f6f6f;--line:#e9e9e9;--paper:#fff;--soft:#f6f6f4}
+    *{box-sizing:border-box} html{scroll-behavior:smooth}
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:var(--paper)}
+    button,input,select,textarea{font:inherit}
+    button,a{ -webkit-tap-highlight-color:transparent }
+    a{color:inherit;text-decoration:none}
+    .announcement{background:#111;color:white;text-align:center;padding:9px 12px;font-size:11px;letter-spacing:1.4px}
+    header{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line)}
+    .nav{max-width:1180px;margin:auto;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .logo{font-weight:900;font-size:25px;letter-spacing:3px}
+    .navlinks{display:flex;gap:24px;font-size:12px;text-transform:uppercase;letter-spacing:1px}
+    .cartbtn{border:1px solid #111;background:#111;color:#fff;padding:11px 15px;cursor:pointer;font-size:12px;letter-spacing:.7px}
+    .hero{max-width:1180px;margin:0 auto;padding:66px 22px 55px;display:grid;grid-template-columns:1.1fr .9fr;gap:35px;align-items:center}
+    .eyebrow{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+    h1{font-size:clamp(42px,6vw,76px);line-height:.98;letter-spacing:-3px;margin:17px 0}
+    .hero p{color:var(--muted);line-height:1.7;max-width:460px;font-size:15px}
+    .primary{display:inline-block;background:#111;color:#fff;padding:14px 20px;border:0;cursor:pointer;font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-top:14px}
+    .hero-art{min-height:330px;background:linear-gradient(135deg,#e7e5e0,#c9c6c0);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+    .hero-art:before{content:"M";font-size:300px;font-weight:900;color:rgba(255,255,255,.48);letter-spacing:-25px}
+    .hero-label{position:absolute;bottom:18px;left:18px;background:#fff;padding:12px 15px;font-size:11px;letter-spacing:1.5px}
+    .section{max-width:1180px;margin:0 auto;padding:35px 22px 70px}
+    .sectionhead{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:23px}
+    h2{font-size:29px;letter-spacing:-1px;margin:0}
+    .sectionhead p{color:var(--muted);font-size:13px;margin:7px 0 0}
+    .filters{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0 25px}
+    .filter{background:#fff;border:1px solid var(--line);padding:9px 13px;cursor:pointer;font-size:12px}
+    .filter.active{background:#111;color:#fff;border-color:#111}
+    .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+    .card{min-width:0}
+    .productimg{height:220px;background:var(--soft);display:flex;align-items:center;justify-content:center;position:relative;font-size:58px}
+    .tag{position:absolute;top:10px;left:10px;background:#fff;padding:6px 8px;font-size:9px;letter-spacing:1px;text-transform:uppercase}
+    .card h3{font-size:14px;margin:13px 0 7px;font-weight:600}
+    .category{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:1px}
+    .price{margin-top:10px;font-size:14px;font-weight:bold}
+    .add{width:100%;margin-top:12px;background:#fff;border:1px solid #111;padding:11px;cursor:pointer;font-size:11px;text-transform:uppercase;letter-spacing:1px}
+    .add:hover{background:#111;color:#fff}
+    .notice{background:var(--soft);padding:25px;text-align:center;line-height:1.6;font-size:13px;color:#555}
+    footer{background:#111;color:#fff;padding:35px 22px}
+    .footinner{max-width:1180px;margin:auto;display:flex;justify-content:space-between;gap:25px;flex-wrap:wrap}
+    .footinner p{font-size:12px;color:#bcbcbc;line-height:1.7;max-width:420px}
+    .footlinks{display:flex;gap:16px;font-size:11px;color:#ddd;flex-wrap:wrap}
+    .overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:10;display:none}
+    .overlay.open{display:block}
+    .drawer{position:absolute;right:0;top:0;height:100%;width:min(470px,100%);background:#fff;padding:22px;overflow:auto}
+    .drawhead{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:16px}
+    .drawhead h2{font-size:22px}
+    .close{border:0;background:transparent;font-size:26px;cursor:pointer}
+    .cartitem{display:grid;grid-template-columns:58px 1fr auto;gap:12px;padding:16px 0;border-bottom:1px solid var(--line);align-items:center}
+    .cartemoji{height:58px;background:var(--soft);display:grid;place-items:center;font-size:27px}
+    .cartitem strong{font-size:13px}.cartitem small{display:block;color:var(--muted);margin-top:5px}
+    .qty{display:flex;gap:8px;align-items:center;margin-top:8px;font-size:12px}
+    .qty button{background:#fff;border:1px solid var(--line);width:25px;height:25px;cursor:pointer}
+    .totalrow{display:flex;justify-content:space-between;margin:20px 0;font-weight:bold}
+    .checkoutform{border-top:1px solid var(--line);padding-top:18px}
+    .checkoutform h3{font-size:16px}
+    label{display:block;font-size:11px;color:#555;margin:12px 0 6px}
+    input,textarea,select{width:100%;padding:12px;border:1px solid #ddd;border-radius:0;background:#fff}
+    textarea{min-height:72px;resize:vertical}
+    .full{width:100%}
+    .fineprint{font-size:10px;line-height:1.5;color:#777}
+    .empty{color:var(--muted);padding:25px 0;font-size:13px}
+    .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:12px 18px;font-size:12px;z-index:20;display:none;max-width:90%;text-align:center}
+    .toast.show{display:block}
+    @media(max-width:800px){.hero{grid-template-columns:1fr;padding-top:42px}.hero-art{min-height:240px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.productimg{height:180px}.navlinks{display:none}.section{padding-bottom:45px}h1{letter-spacing:-2px}}
+    @media(max-width:390px){.productimg{height:150px}.logo{font-size:22px}.grid{gap:9px}}
+  </style>
+</head>
+<body>
+  <div class="announcement">MENGRO — EVERYDAY FINDS, ONE PLACE</div>
+  <header>
+    <nav class="nav">
+      <a class="logo" href="#">MENGRO</a>
+      <div class="navlinks"><a href="#shop">Shop</a><a href="#about">About</a><a href="#contact">Contact</a></div>
+      <button class="cartbtn" id="openCart">BAG (<span id="cartCount">0</span>)</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <div class="eyebrow">A little something for everyday</div>
+        <h1>Good finds.<br>Better living.</h1>
+        <p>Discover useful accessories, lifestyle essentials and giftable finds — carefully picked for everyday life.</p>
+        <a class="primary" href="#shop">Explore products</a>
+      </div>
+      <div class="hero-art"><div class="hero-label">THE MENGRO EDIT · 001</div></div>
+    </section>
+
+    <section class="section" id="shop">
+      <div class="sectionhead">
+        <div><div class="eyebrow">Shop the collection</div><h2>Popular picks</h2><p>A starter collection — replace these sample items with products you can actually fulfil.</p></div>
+      </div>
+      <div class="filters" id="filters">
+        <button class="filter active" data-cat="All">All products</button>
+        <button class="filter" data-cat="Accessories">Accessories</button>
+        <button class="filter" data-cat="Gadgets">Gadgets</button>
+        <button class="filter" data-cat="Lifestyle">Lifestyle</button>
+        <button class="filter" data-cat="Gifts">Gifts</button>
+      </div>
+      <div class="grid" id="productGrid"></div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="notice"><strong>MENGRO is getting started.</strong><br>We’re building a simple place to discover everyday products. Product availability, delivery times and return terms should be confirmed before accepting paid orders.</div>
+    </section>
+  </main>
+
+  <footer id="contact">
+    <div class="footinner">
+      <div><div class="logo">MENGRO</div><p>Everyday products, thoughtfully picked. Questions about an order? Contact us using the details you add before publishing this site.</p></div>
+      <div><div class="eyebrow" style="color:#aaa">Customer care</div><div class="footlinks" style="margin-top:14px"><a href="#contact">Contact</a><a href="#about">Shipping & returns</a><a href="#shop">Shop</a></div><p>Replace this section with your real contact details and clear policies.</p></div>
+    </div>
+  </footer>
+
+  <div class="overlay" id="cartOverlay" aria-hidden="true">
+    <div class="drawer" role="dialog" aria-modal="true" aria-label="Shopping bag">
+      <div class="drawhead"><h2>Your bag</h2><button class="close" id="closeCart" aria-label="Close bag">×</button></div>
+      <div id="cartItems"></div>
+      <div class="totalrow"><span>Subtotal</span><span id="subtotal">₹0</span></div>
+      <p class="fineprint">Shipping and final charges must be confirmed before payment. This demo does not collect payments or send orders to a server.</p>
+      <form class="checkoutform" id="checkoutForm">
+        <h3>Checkout details</h3>
+        <label for="customerName">Full name *</label><input id="customerName" required autocomplete="name" />
+        <label for="customerPhone">Phone number *</label><input id="customerPhone" required type="tel" inputmode="tel" autocomplete="tel" pattern="[0-9+() -]{8,18}" />
+        <label for="customerAddress">Delivery address *</label><textarea id="customerAddress" required autocomplete="street-address"></textarea>
+        <label for="customerPin">PIN code *</label><input id="customerPin" required inputmode="numeric" pattern="[0-9]{6}" maxlength="6" />
+        <label for="paymentMethod">Preferred payment method</label>
+        <select id="paymentMethod"><option>Confirm with me before payment</option><option>Cash on delivery (only if available)</option><option>Online payment (not enabled in this demo)</option></select>
+        <button class="primary full" type="submit">Place demo order</button>
+        <p class="fineprint">Demo only: your order stays in this browser on this device. No payment is taken and no seller or courier is notified. Do not publish as a live store until secure order processing is connected.</p>
+      </form>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const products = [
+      {id:1,name:"Classic Everyday Watch",cat:"Accessories",price:499,emoji:"⌚",tag:"Popular"},
+      {id:2,name:"Minimal Wallet",cat:"Accessories",price:249,emoji:"👛",tag:"Everyday"},
+      {id:3,name:"Foldable Phone Stand",cat:"Gadgets",price:179,emoji:"📱",tag:"Useful find"},
+      {id:4,name:"Desk Organiser",cat:"Lifestyle",price:299,emoji:"🗂️",tag:"New"},
+      {id:5,name:"Classic Sunglasses",cat:"Accessories",price:349,emoji:"🕶️",tag:"Trending"},
+      {id:6,name:"Ambient Room Light",cat:"Lifestyle",price:399,emoji:"💡",tag:"Popular"},
+      {id:7,name:"Gift Set Idea",cat:"Gifts",price:449,emoji:"🎁",tag:"Gift pick"},
+      {id:8,name:"Travel Utility Pouch",cat:"Lifestyle",price:229,emoji:"🎒",tag:"Everyday"}
+    ];
+    let cart = JSON.parse(localStorage.getItem("mengroCart") || "[]");
+    let activeCategory = "All";
+    const rupee = n => "₹" + Number(n).toLocaleString("en-IN");
+    const grid = document.getElementById("productGrid");
+    const overlay = document.getElementById("cartOverlay");
+    const toast = document.getElementById("toast");
+
+    function showToast(message){toast.textContent=message;toast.classList.add("show");setTimeout(()=>toast.classList.remove("show"),2800)}
+    function renderProducts(){
+      const list = activeCategory==="All" ? products : products.filter(p=>p.cat===activeCategory);
+      grid.innerHTML = list.map(p=>`<article class="card"><div class="productimg"><span class="tag">${p.tag}</span>${p.emoji}</div><div class="category">${p.cat}</div><h3>${p.name}</h3><div class="price">${rupee(p.price)}</div><button class="add" onclick="addToCart(${p.id})">Add to bag</button></article>`).join("");
+    }
+    function saveCart(){localStorage.setItem("mengroCart",JSON.stringify(cart));renderCart()}
+    function addToCart(id){const found=cart.find(i=>i.id===id);found?found.qty++:cart.push({id,qty:1});saveCart();showToast("Added to your bag")}
+    function changeQty(id,delta){const item=cart.find(i=>i.id===id);if(!item)return;item.qty+=delta;if(item.qty<=0)cart=cart.filter(i=>i.id!==id);saveCart()}
+    function renderCart(){
+      document.getElementById("cartCount").textContent=cart.reduce((s,i)=>s+i.qty,0);
+      const target=document.getElementById("cartItems");
+      if(!cart.length){target.innerHTML='<div class="empty">Your bag is empty. Add a product to get started.</div>';document.getElementById("subtotal").textContent=rupee(0);return}
+      target.innerHTML=cart.map(i=>{const p=products.find(p=>p.id===i.id);return `<div class="cartitem"><div class="cartemoji">${p.emoji}</div><div><strong>${p.name}</strong><small>${rupee(p.price)} each</small><div class="qty"><button type="button" onclick="changeQty(${p.id},-1)">−</button><span>${i.qty}</span><button type="button" onclick="changeQty(${p.id},1)">+</button></div></div><strong>${rupee(p.price*i.qty)}</strong></div>`}).join("");
+      document.getElementById("subtotal").textContent=rupee(cart.reduce((s,i)=>s+products.find(p=>p.id===i.id).price*i.qty,0));
+    }
+    function openCart(){overlay.classList.add("open");overlay.setAttribute("aria-hidden","false");document.body.style.overflow="hidden"}
+    function closeCart(){overlay.classList.remove("open");overlay.setAttribute("aria-hidden","true");document.body.style.overflow=""}
+    document.getElementById("openCart").addEventListener("click",openCart);
+    document.getElementById("closeCart").addEventListener("click",closeCart);
+    overlay.addEventListener("click",e=>{if(e.target===overlay)closeCart()});
+    document.querySelectorAll(".filter").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".filter").forEach(x=>x.classList.remove("active"));b.classList.add("active");activeCategory=b.dataset.cat;renderProducts()}));
+    document.getElementById("checkoutForm").addEventListener("submit",e=>{
+      e.preventDefault();
+      if(!cart.length){showToast("Your bag is empty");return}
+      const order={orderId:"MG"+Date.now().toString().slice(-8),createdAt:new Date().toISOString(),customer:{name:document.getElementById("customerName").value,phone:document.getElementById("customerPhone").value,address:document.getElementById("customerAddress").value,pin:document.getElementById("customerPin").value},paymentMethod:document.getElementById("paymentMethod").value,items:cart.map(i=>({...i,product:products.find(p=>p.id===i.id)})),subtotal:cart.reduce((s,i)=>s+products.find(p=>p.id===i.id).price*i.qty,0),status:"Demo order — not sent to seller"};
+      const orders=JSON.parse(localStorage.getItem("mengroDemoOrders")||"[]");orders.push(order);localStorage.setItem("mengroDemoOrders",JSON.stringify(orders));
+      alert("Demo order created: "+order.orderId+"\\n\\nThis is only a local demo. No real order was sent and no payment was taken.");
+      cart=[];saveCart();e.target.reset();closeCart();
+    });
+    renderProducts();renderCart();
+  </script>
+</body>
+</html>
